@@ -198,14 +198,14 @@ class CocktailsContainer extends React.Component {
           "inside result",
           el.props.id,
           el.props.name,
-          el.props.name.toLowerCase().includes(query) ||
-            proportions.includes(el.props.id)
+          el.props.name
+            ? el.props.name.toLowerCase().includes(query)
+            : null || proportions.includes(el.props.id)
         );
         // debugger;
-        return (
-          el.props.name.toLowerCase().includes(query) ||
-          proportions.includes(el.props.id)
-        );
+        return el.props.name
+          ? el.props.name.toLowerCase().includes(query)
+          : null || proportions.includes(el.props.id);
       });
       console.log("result", result);
       return result;
