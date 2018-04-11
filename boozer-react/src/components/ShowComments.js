@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Comment, Form } from "semantic-ui-react";
+import { Comment } from "semantic-ui-react";
 
 const ShowComments = props => {
   const elapsed = (start, end) => {
@@ -12,8 +12,8 @@ const ShowComments = props => {
           ? (time / 60 < 365).toFixed() + " day(s) ago"
           : (time / 60 / 60 / 24 / 365).toFixed() + " year(s) ago";
   };
-  const created = new Date(props.created);
-  const updated = new Date(props.updated);
+  // const created = new Date(props.created);
+  // const updated = new Date(props.updated);
 
   return (
     <Comment.Group>

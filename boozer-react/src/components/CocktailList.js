@@ -14,7 +14,7 @@ export const Slugify = name => {
   if (name) {
     return name.replace(/[^a-zA-Z0-9 ]/g, "");
   }
-  console.log("outside if", name);
+  // console.log("outside if", name);
   return name;
 };
 

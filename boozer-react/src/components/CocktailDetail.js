@@ -1,6 +1,5 @@
 import React from "react";
-import { Button, Comment, Form, Rating, Segment } from "semantic-ui-react";
-import AddComment from "./AddComment";
+import { Button, Rating, Segment } from "semantic-ui-react";
 import { Slugify } from "./CocktailList";
 import { Link, withRouter } from "react-router-dom";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Comment, Form, Segment } from "semantic-ui-react";
+import { Button, Comment, Form } from "semantic-ui-react";
 
 const AddComment = props => {
   console.log("addcomment", props);

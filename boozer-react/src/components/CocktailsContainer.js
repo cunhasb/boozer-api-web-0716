@@ -44,13 +44,10 @@ class CocktailsContainer extends React.Component {
         .then(selectedCocktail =>
           this.setState(prevState => {
             if (selectedCocktail) {
-              const comment = selectedCocktail.comments.find(comment => {
-                return comment.user_id === this.state.currentUser.id;
+              const comment = selectedCocktail.comments.find(el => {
+                return el.user_id === this.state.currentUser.id;
               });
-
-              {
-                newComment: comment;
-              }
+              return { newComment: comment };
             }
           })
         );
@@ -186,6 +183,7 @@ class CocktailsContainer extends React.Component {
 
   applyFilter = (collection, query) => {
     if (query) {
+      // debugger;
       const proportions = this.state.proportions
         .map(proportion => {
           if (
@@ -203,6 +201,7 @@ class CocktailsContainer extends React.Component {
           el.props.name.toLowerCase().includes(query) ||
             proportions.includes(el.props.id)
         );
+        // debugger;
         return (
           el.props.name.toLowerCase().includes(query) ||
           proportions.includes(el.props.id)
