@@ -57,12 +57,15 @@ class CocktailsContainer extends React.Component {
   handleAddClick = event => {
     event.preventDefault();
     const proportions = { ingredient_name: "", amount: "" };
-    this.setState(prevState => ({
-      newCocktail: {
-        ...prevState.newCocktail,
-        proportions: [...prevState.newCocktail.proportions, proportions]
-      }
-    }));
+    this.setState(prevState => {
+      console.log("handleclick", prevState.newCocktail);
+      return {
+        newCocktail: {
+          ...prevState.newCocktail,
+          proportions: [...prevState.newCocktail.proportions, proportions]
+        }
+      };
+    });
   };
 
   handleChange = event => {
@@ -74,41 +77,47 @@ class CocktailsContainer extends React.Component {
     const cKey = event.target.name;
     const cValue = event.target.value;
     if (cKey === "ingredient_name" || cKey === "amount") {
-      this.setState(prevState => ({
-        newCocktail: {
-          ...prevState.newCocktail,
-          proportions: prevState.newCocktail.proportions.map(
-            (proportion, index) => {
-              if (index == cId) {
-                if (cKey === "ingredient_name") {
-                  return {
-                    ingredient_name: cValue,
-                    amount: proportion.amount
-                  };
+      this.setState(prevState => {
+        console.log("handlechange", prevState.newCocktail);
+        return {
+          newCocktail: {
+            ...prevState.newCocktail,
+            proportions: prevState.newCocktail.proportions.map(
+              (proportion, index) => {
+                if (index == cId) {
+                  if (cKey === "ingredient_name") {
+                    return {
+                      ingredient_name: cValue,
+                      amount: proportion.amount
+                    };
+                  } else {
+                    return {
+                      ingredient_name: proportion.ingredient_name,
+                      amount: cValue
+                    };
+                  }
                 } else {
-                  return {
-                    ingredient_name: proportion.ingredient_name,
-                    amount: cValue
-                  };
+                  return proportion;
                 }
-              } else {
-                return proportion;
               }
-            }
-          )
-        }
-      }));
+            )
+          }
+        };
+      });
     } else if (cKey === "query") {
       this.setState({ query: cValue });
     } else if (cKey === "newComment") {
       this.setState({ newComment: cValue });
     } else {
-      this.setState(prevState => ({
-        newCocktail: {
-          ...prevState.newCocktail,
-          [cKey]: cValue
-        }
-      }));
+      this.setState(prevState => {
+        console.log("handlechange else", prevState.newCocktail);
+        return {
+          newCocktail: {
+            ...prevState.newCocktail,
+            [cKey]: cValue
+          }
+        };
+      });
     }
   };
 
@@ -125,11 +134,12 @@ class CocktailsContainer extends React.Component {
     event.persist();
     event.preventDefault();
     this.setState(prevState => {
+      console.log("handleremoveIngredient", prevState.newCocktail);
       const proportions = prevState.newCocktail.proportions;
       proportions.splice(event.target.id, 1);
       return {
         newCocktail: {
-          ...prevState,
+          ...prevState.newCocktail,
           proportions: proportions
         }
       };
@@ -194,26 +204,22 @@ class CocktailsContainer extends React.Component {
         })
         .filter(Boolean);
       const result = collection.filter(el => {
-        console.log(
-          "inside result",
-          el.props.id,
-          el.props.name,
-          el.props.name
-            ? el.props.name.toLowerCase().includes(query)
-            : null || proportions.includes(el.props.id)
-        );
-        // debugger;
-        return el.props.name
-          ? el.props.name.toLowerCase().includes(query)
-          : null || proportions.includes(el.props.id);
+        if (!!el.props.name) {
+          return (
+            el.props.name.toLowerCase().includes(query) ||
+            proportions.includes(el.props.id)
+          );
+        } else {
+          return proportions.includes(el.props.id);
+        }
       });
-      console.log("result", result);
       return result;
     } else {
       return collection;
     }
   };
   render() {
+    console.log("state newCocktail", this.state.newCocktail);
     const cocktailList = this.applyFilter(
       this.state.cocktails.map(cocktail => {
         return (
