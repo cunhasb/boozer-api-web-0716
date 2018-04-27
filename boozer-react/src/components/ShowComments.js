@@ -9,7 +9,7 @@ const ShowComments = props => {
       : time / 60 < 24
         ? (time / 60).toFixed() + " hour(s) ago"
         : time / 60 / 24 < 365
-          ? (time / 60 < 365).toFixed() + " day(s) ago"
+          ? (time / 60 / 24).toFixed() + " day(s) ago"
           : (time / 60 / 60 / 24 / 365).toFixed() + " year(s) ago";
   };
   // const created = new Date(props.created);
